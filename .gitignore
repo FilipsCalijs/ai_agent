@@ -1,0 +1,16 @@
+# Python environment
+venv/
+*.pyc
+__pycache__/
+
+# Environment files
+.env
+
+# IDE / Editor files
+*.idea/
+*.vscode/
+*.swp
+
+# OS files
+.DS_Store
+Thumbs.db
