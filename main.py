@@ -34,15 +34,20 @@ prompt = ChatPromptTemplate.from_messages(
     ]
 ).partial(format_instructions=parser.get_format_instructions())
 
+
+tools = [search_tool, wiki_tool, save_tool]
 agent = create_tool_calling_agent(
     llm=llm,
     prompt=prompt,
-    tools=[]
+    tools=tools
 )
-agent_executor = AgentExecutor(agent=agent, tools=[], verbose=True)
-raw_response = agent_executor.invoke({"query": "what is capital of moskow"})
-print(raw_response)
+agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
+query = input("What can i help you researching?")
+raw_response = agent_executor.invoke({"query": query})
 
-stractured_response = parser.parse(raw_response.get("output"))
-print(type(raw_response))
-print(raw_response)
+try:
+    structured_response = parser.parse(raw_response["output"])
+    print(structured_response)
+
+except Exception as e:
+    print("error")
